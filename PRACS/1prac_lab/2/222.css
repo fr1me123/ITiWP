@@ -1,0 +1,18 @@
+body {
+    font-family: "Courier New", monospace;
+}
+
+h1 {
+    font-family: "Times New Roman", serif;
+}
+
+.custom-list {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.custom-list>li {
+    background: url('marker.gif') no-repeat left center;
+    background-size: 30px 30px;
+    padding-left: 40px;
+}

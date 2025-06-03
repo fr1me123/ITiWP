@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: white;
+}
+
+.container {
+    border: 2px solid green;
+    border-radius: 10px;
+    width: 450px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px;
+    gap: 5px;
+}
+
+.elem {
+    background-color: green;
+    color: white;
+    font-size: 1.2rem;
+    width: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    width: 70px;
+    height: 800px;
+    align-self: center;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}

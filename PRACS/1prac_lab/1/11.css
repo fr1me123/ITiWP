@@ -1,0 +1,57 @@
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: left;
+    padding: 200px;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 16px;
+    color: black;
+    font-weight: normal;
+    text-align: center;
+}
+
+.highlight-blue {
+    color: blue;
+}
+
+.highlight-purple {
+    color: purple;
+}
+
+.highlight-orange {
+    color: rgb(206, 134, 0);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
+.large {
+    font-size: 24px;
+}
+
+.small {
+    font-size: 10px;
+}
+
+.right {
+    text-align: right;
+}
+
+img {
+    width: 170px;
+    border-radius: 10px;
+    float: right;
+}

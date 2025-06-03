@@ -1,0 +1,41 @@
+.top-menu li {
+    list-style: none;
+    /*Скрываются маркер элементов списка*/
+    display: inline-block;
+    /*Выстраивание пунктов меню в ряд*/
+    background: #ccc;
+    /*Цвет фона для пункта*/
+    position: relative;
+}
+
+.top-menu li:hover {
+    background: #eee;
+    /*Цвет фона при наведение на пункт*/
+}
+
+.top-menu li a {
+    color: #222;
+    /*Цвет шрифта в пункте*/
+    padding: 5px 7px;
+    /*Отступы для пункта*/
+    text-decoration: none;
+    /*Убирается подчеркивание*/
+    display: block;
+}
+
+.top-menu li ul {
+    display: none;
+    /* Выпадающее меню прячется */
+    position: absolute;
+    padding-left: 0;
+    width: 120px;
+    /*Ширина выпадающего меню*/
+    padding-top: 3px;
+    /*Отступ сверху у выпадающего меню*/
+}
+
+.top-menu li:hover ul {
+    display: block;
+    /*Показ выпадающего меню при наведении*/
+    left: 0px;
+}
