@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Категории автомобилей</title>
+    <link rel="stylesheet" href="1.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="menu">
+            <button data-category="1">Porsche</button>
+            <button data-category="2">Mercedes Benz</button>
+            <button data-category="3">BMW</button>
+
+        </nav>
+        <div class="image-box">
+            <img src="1-1.jpg" alt="Автомобиль" id="car-image">
+        </div>
+    </div>
+
+    <script>
+        const image = document.getElementById("car-image");
+        let currentCategory = 1;
+        let currentIndex = 1;
+        let intervalId = null;
+
+        document.querySelectorAll(".menu button").forEach(button => {
+            button.addEventListener("click", () => {
+                currentCategory = button.dataset.category;
+                currentIndex = 1;
+                image.src = `${currentCategory}-1.jpg`;
+            });
+        });
+
+        image.addEventListener("mouseenter", () => {
+            if (intervalId) return; // избегаем запуска нескольких интервалов
+
+            intervalId = setInterval(() => {
+                currentIndex = currentIndex % 3 + 1; // 1→2→3→1
+                image.src = `${currentCategory}-${currentIndex}.jpg`;
+            }, 1000);
+        });
+
+        image.addEventListener("mouseleave", () => {
+            clearInterval(intervalId);
+            intervalId = null;
+        });
+    </script>
+
+</body>
+
+</html>

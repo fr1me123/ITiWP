@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 600px;
+    height: auto;
+    /* Фиксированная высота контейнера */
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+}
+
+.menu button {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.menu button:hover {
+    background-color: #555;
+}
+
+.image-box {
+    width: 100%;
+    height: auto;
+    /* Высота тоже фиксирована */
+    text-align: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+.image-box img {
+    width: 100%;
+    /* Ширина изображения 100% от контейнера */
+    height: auto;
+    /* Высота изображения 100% от контейнера */
+    object-fit: cover;
+    /* Изображение масштабируется с сохранением пропорций */
+    transition: 0.3s ease;
+    cursor: pointer;
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Анкета участника Олимпиады</title>
+    <link rel="stylesheet" type="text/css" href="1.css">
+</head>
+
+<body>
+    <h1>Анкета участника Олимпиады</h1>
+    <form id="form">
+        <label>Имя участника:
+            <input type="text" id="name" required>
+        </label>
+
+        <label>Задача 1:
+            <select id="task1">
+                <option value="0">0</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+
+        <label>Задача 2:
+            <select id="task2">
+                <option value="0">0</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+
+        <label>Задача 3:
+            <select id="task3">
+                <option value="0">0</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+
+        <label>Задача 4:
+            <select id="task4">
+                <option value="0">0</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+
+        <label>Задача 5:
+            <select id="task5">
+                <option value="0">0</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+
+        <label>Задача 6:
+            <select id="task6">
+                <option value="0">0</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+
+        <button type="button" onclick="calculate()">Проверить результат</button>
+
+        <div id="result"></div>
+    </form>
+
+    <script>
+        function calculate() {
+            const name = document.getElementById("name").value.trim();
+            if (!name) {
+                alert("Пожалуйста, введите имя участника.");
+                return;
+            }
+
+            const scores = [];
+            for (let i = 1; i <= 6; i++) {
+                scores.push(parseInt(document.getElementById("task" + i).value));
+            }
+
+            const total = scores.reduce((a, b) => a + b, 0);
+            let place = "Без призового места";
+
+            if (scores.every(score => score === 30)) {
+                place = "1 место";
+            } else if (scores.every(score => score >= 20) && scores.includes(30)) {
+                place = "2 место";
+            } else if (scores.every(score => score === 20)) {
+                place = "3 место";
+            }
+
+            document.getElementById("result").innerText =
+                `Участник: ${name}\nСумма баллов: ${total}\nМесто: ${place}`;
+        }
+    </script>
+</body>
+
+</html>

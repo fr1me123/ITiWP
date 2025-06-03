@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="11.css">
+    <script>
+        function requestName() {
+            // Запрашиваем фамилию
+            let surname = prompt("Введите вашу фамилию:");
+            if (!surname) {
+                alert("Ошибка: Фамилия не введена.");
+                return;
+            }
+
+            // Запрашиваем имя
+            let firstName = prompt("Введите ваше имя:");
+            if (!firstName) {
+                alert("Ошибка: Имя не введено.");
+                return;
+            }
+
+            // Запрашиваем отчество
+            let patronymic = prompt("Введите ваше отчество:");
+            if (!patronymic) {
+                alert("Ошибка: Отчество не введено.");
+                return;
+            }
+
+            // Подтверждаем введенные данные
+            let confirmation = confirm(`Вы ввели: ${surname} ${firstName} ${patronymic}. Всё верно?`);
+
+            if (confirmation) {
+                alert(`Здравствуйте, ${firstName} ${patronymic}!`);
+            } else {
+                alert("Ошибка: Вы не подтвердили данные.");
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+    <script>
+        function checkAccess() {
+            let age = prompt("Введите ваш возраст:");
+
+            if (age === null) {
+                alert("Вход отменён");
+                return;
+            }
+
+            age = Number(age);
+
+            if (isNaN(age)) {
+                alert("Странный возраст");
+                return;
+            }
+
+            if (age >= 14 && age < 18) {
+                let password = prompt("Введите пароль:");
+                if (password === "Родительский контроль") {
+                    alert("Добро пожаловать!");
+                } else if (password === null) {
+                    alert("Вход отменён");
+                } else {
+                    alert("Пароль неверен");
+                }
+            } else if (age >= 18) {
+                let password = prompt("Введите пароль:");
+                if (password === "Я взрослый") {
+                    alert("Добро пожаловать!");
+                } else if (password === null) {
+                    alert("Вход отменён");
+                } else {
+                    alert("Пароль неверен");
+                }
+            } else {
+                alert("Странный возраст");
+            }
+        }
+    </script>
+    <script>
+        function createChessboard(size) {
+            let board = "";
+            for (let row = 0; row < size; row++) {
+                if (row % 2 === 0) {
+                    board += "# ".repeat(Math.floor(size / 2)) + (size % 2 ? "#" : "") + "<br>";
+                } else {
+                    board += " #".repeat(Math.floor(size / 2)) + (size % 2 ? " " : "") + "<br>";
+                }
+            }
+            return board;
+        }
+
+        function displayChessboard() {
+            const size = parseInt(prompt("Введите размер доски:"), 10);
+            if (isNaN(size) || size <= 0) {
+                alert("Введите корректный размер доски");
+                return;
+            }
+            document.getElementById("chessboard").innerHTML = createChessboard(size);
+        }
+    </script>
+</head>
+
+<body>
+    <h1 class="company-title">overIT</h1>
+    <img src="logo.png" alt="Логотип фирмы">
+    <p class="text">Добро пожаловать на сайт компании overIT!</p>
+    <p class="text">Адрес: г. Минск, ул. Фроликова 7, д. 1</p>
+    <a href="D:\1UNI2025\ITiWP\LABS\lab1\2\ads.html" class="text">Лучшие предложения</a><br>
+    <a href="D:\1UNI2025\ITiWP\LABS\lab1\3\catalog.html" class="text">Перечень услуг/товаров</a>
+    <h5>Лабораторная 2</h5>
+    <button onclick="requestName()">Вход</button>
+    <button onclick="calculateHypotenuse()">Вычислить гипотенузу</button>
+    <h5>Лабораторная 3</h5>
+    <button onclick="checkAccess()">Вход по возрасту</button>
+    <button onclick="displayChessboard()">Шахматная доска</button>
+    </br>
+    <pre id="chessboard" style="letter-spacing: 15px;"></pre>
+</body>
+
+</html>

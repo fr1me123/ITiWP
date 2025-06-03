@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Контракты сотрудников</title>
+    <link rel="stylesheet" type="text/css" href="1.css">
+</head>
+
+<body>
+
+    <h2>Анкета сотрудников (10 человек)</h2>
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th>Фамилия</th>
+                <th>Дата контракта</th>
+                <th>Срок (лет)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Строки с input для 10 сотрудников -->
+            <script>
+                for (let i = 0; i < 10; i++) {
+                    document.write(`
+                        <tr>
+                            <td><input type="text" class="surname"></td>
+                            <td><input type="date" class="startDate"></td>
+                            <td><input type="number" class="duration" min="1" max="50"></td>
+                        </tr>
+                    `);
+                }
+            </script>
+        </tbody>
+    </table>
+
+    <h3>Фильтрация сотрудников</h3>
+
+    <label>Выберите время года:
+        <select id="season">
+            <option value="">--</option>
+            <option value="winter">Зима</option>
+            <option value="spring">Весна</option>
+            <option value="summer">Лето</option>
+            <option value="autumn">Осень</option>
+        </select>
+    </label>
+    <button onclick="filterBySeason()">По времени года окончания</button>
+
+    <br><label>Номер квартала (1–4):
+        <input type="number" id="quarter" min="1" max="4">
+    </label>
+    <button onclick="filterByQuarter()">По кварталу окончания</button>
+
+    <br><label>Введите дату для проверки активных контрактов:
+        <input type="date" id="activeDate">
+    </label>
+    <button onclick="filterActiveOnDate()">Активны на дату</button>
+
+    <br><label>Введите дату для проверки завершённых контрактов:
+        <input type="date" id="expiredDate">
+    </label>
+    <button onclick="filterExpiredOnDate()">Завершены на дату</button>
+
+    <br><br>
+    <button onclick="clearStorage()">🧹 Очистить данные</button>
+
+    <div id="results"></div>
+
+    <script>
+        const STORAGE_KEY = "employeesData";
+
+        // Загружаем данные из localStorage при загрузке страницы
+        window.addEventListener("DOMContentLoaded", () => {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                const data = JSON.parse(stored);
+                const surnames = document.querySelectorAll(".surname");
+                const startDates = document.querySelectorAll(".startDate");
+                const durations = document.querySelectorAll(".duration");
+
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i]) {
+                        surnames[i].value = data[i].name || "";
+                        startDates[i].value = data[i].startDate || "";
+                        durations[i].value = data[i].duration || "";
+                    }
+                }
+            }
+
+            addInputListeners();
+        });
+
+        function addInputListeners() {
+            const inputs = document.querySelectorAll(".surname, .startDate, .duration");
+            inputs.forEach(input => {
+                input.addEventListener("input", saveToLocalStorage);
+            });
+        }
+
+        function saveToLocalStorage() {
+            const surnames = document.querySelectorAll(".surname");
+            const startDates = document.querySelectorAll(".startDate");
+            const durations = document.querySelectorAll(".duration");
+
+            const employees = [];
+            for (let i = 0; i < surnames.length; i++) {
+                employees.push({
+                    name: surnames[i].value,
+                    startDate: startDates[i].value,
+                    duration: durations[i].value
+                });
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+        }
+
+        function parseEmployees() {
+            const surnames = document.querySelectorAll(".surname");
+            const startDates = document.querySelectorAll(".startDate");
+            const durations = document.querySelectorAll(".duration");
+
+            const employees = [];
+            for (let i = 0; i < surnames.length; i++) {
+                if (surnames[i].value && startDates[i].value && durations[i].value) {
+                    const start = new Date(startDates[i].value);
+                    const end = new Date(start);
+                    end.setFullYear(end.getFullYear() + parseInt(durations[i].value));
+                    employees.push({
+                        name: surnames[i].value,
+                        startDate: start,
+                        endDate: end
+                    });
+                }
+            }
+            return employees;
+        }
+
+        function filterBySeason() {
+            const season = document.getElementById("season").value;
+            const seasonMonths = {
+                winter: [11, 0, 1],
+                spring: [2, 3, 4],
+                summer: [5, 6, 7],
+                autumn: [8, 9, 10]
+            };
+            const employees = parseEmployees();
+            const results = employees.filter(e =>
+                seasonMonths[season]?.includes(e.endDate.getMonth())
+            );
+            showResults(`Контракты заканчиваются в выбранный сезон:`, results);
+        }
+
+        function filterByQuarter() {
+            const q = parseInt(document.getElementById("quarter").value);
+            const employees = parseEmployees();
+            const results = employees.filter(e => {
+                const month = e.endDate.getMonth();
+                const quarter = Math.floor(month / 3) + 1;
+                return quarter === q;
+            });
+            showResults(`Контракты заканчиваются в ${q}-м квартале:`, results);
+        }
+
+        function filterActiveOnDate() {
+            const d = new Date(document.getElementById("activeDate").value);
+            const employees = parseEmployees();
+            const results = employees.filter(e =>
+                d >= e.startDate && d < e.endDate
+            );
+            showResults(`Контракты активны на ${d.toLocaleDateString()}:`, results);
+        }
+
+        function filterExpiredOnDate() {
+            const d = new Date(document.getElementById("expiredDate").value);
+            const employees = parseEmployees();
+            const results = employees.filter(e =>
+                d >= e.endDate
+            );
+            showResults(`Контракты завершены на ${d.toLocaleDateString()}:`, results);
+        }
+
+        function showResults(title, employees) {
+            const lines = employees.map(e =>
+                `${e.name}: ${e.endDate.toLocaleDateString()}`
+            );
+            document.getElementById("results").innerText =
+                `${title}\n` + (lines.length ? lines.join("\n") : "Нет совпадений");
+        }
+
+        function clearStorage() {
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+        }
+    </script>
+
+</body>
+
+</html>
